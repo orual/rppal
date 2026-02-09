@@ -303,7 +303,13 @@ impl I2c {
         File::open(format!(
             "/sys/class/i2c-adapter/i2c-{}/of_node/clock-frequency",
             self.bus
-        ))?
+        ))
+        .or_else(|_| {
+            File::open(format!(
+                "/sys/class/i2c-dev/i2c-{}/of_node/clock-frequency",
+                self.bus
+            ))
+        })?
         .read_exact(&mut buffer)?;
 
         Ok(u32::from(buffer[3])
