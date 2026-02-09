@@ -306,7 +306,7 @@ impl I2c {
         ))
         .or_else(|_| {
             File::open(format!(
-                "/sys/class/i2c-dev/i2c-{}/of_node/clock-frequency",
+                "/sys/class/i2c-dev/i2c-{}/device/of_node/clock-frequency",
                 self.bus
             ))
         })?
